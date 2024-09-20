@@ -1,0 +1,4 @@
+SPRING_DATASOURCE_URL=jdbc:postgresql://localhost:5432/saborTech
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+POSTGRES_DB=saborTech
