@@ -1,4 +1,4 @@
-package com.savortech.sabortech;
+package com.sabortech.sabortech;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
