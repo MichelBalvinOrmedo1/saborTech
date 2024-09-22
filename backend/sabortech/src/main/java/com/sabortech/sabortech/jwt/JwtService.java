@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -29,7 +31,7 @@ public class JwtService {
                 .setClaims(extraClaims)
                 .setSubject(user.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
+                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 48))
                 .signWith(getKey(), SignatureAlgorithm.HS256)
                 .compact();
     }
@@ -40,6 +42,11 @@ public class JwtService {
     }
 
     public String getUsernameFromToken(String token) {
+        return getClaim(token, Claims::getSubject);
+    }
+
+    // obtener el id del usuario
+    public String getUserIdFromToken(String token) {
         return getClaim(token, Claims::getSubject);
     }
 
@@ -69,4 +76,17 @@ public class JwtService {
     private boolean isTokenExpired(String token) {
         return getExpiration(token).before(new Date());
     }
+
+    public String getAuthenticatedUserId() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof UserDetails) {
+            String token = (String) authentication.getCredentials();
+            if (token == null || token.isEmpty()) {
+                return "JWT token is null or empty";
+            }
+            return getUserIdFromToken(token);
+        }
+        return "Authentication is null or principal is not an instance of UserDetails";
+    }
+
 }
