@@ -26,8 +26,10 @@
 		<tag/>
 		<url/>
 	</scm>
+	
 	<properties>
 		<java.version>21</java.version>
+		<maven.compiler.source>21</maven.compiler.source>
 	</properties>
 	<dependencies>
 		<dependency>

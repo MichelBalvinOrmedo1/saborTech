@@ -1,5 +1,8 @@
 # Etapa de construcción
-FROM maven:3.8.4-openjdk-17 AS build
+FROM openjdk:21-slim AS build
+
+# Instalar Maven
+RUN apt-get update && apt-get install -y maven
 
 # Establecer el directorio de trabajo
 WORKDIR /app
@@ -13,7 +16,7 @@ COPY src ./src
 RUN mvn clean package -DskipTests
 
 # Etapa de ejecución
-FROM openjdk:17-slim
+FROM openjdk:21-slim
 
 # Establecer el directorio de trabajo
 WORKDIR /app
@@ -24,5 +27,5 @@ COPY --from=build /app/target/*.jar app.jar
 # Exponer el puerto en el que la aplicación se ejecutará
 EXPOSE 8080
 
-# Definir el comando para ejecutar la aplicación
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Comando para ejecutar la aplicación
+CMD ["java", "-jar", "app.jar"]
