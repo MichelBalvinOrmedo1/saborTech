@@ -5,17 +5,18 @@ import { Home } from "../app/home/Home";
 import { Login } from "../app/auth/Login";
 import { Signup } from "../app/auth/Signup";
 import { App } from "../App";
+import { Search } from "../page/Search/Search";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
-      { path: "/", element: <Home /> },
+      { path: "/", element: <Search /> },
       { path: "login", element: <Login /> },
       { path: "register", element: <Signup /> },
       {
-        path: "/",
+        path: "/search",
         element: (
           <ProtectedRoute>
             <Home />
