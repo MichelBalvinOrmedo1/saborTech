@@ -1,35 +1,5 @@
-type Ingredient = {
-  id: string;
-  amount: string;
-  unit: number;
-  ingredient_name: string;
-};
-type Step = {
-  id: string;
-  description: string;
-  step_number: number;
-};
-
-enum TimeFormat {
-  Minutes = "minutes",
-  Hours = "hours",
-  Days = "days",
-}
-
-type Recipe = {
-  id: string;
-  image: string;
-  name: string;
-  time: number;
-  time_format: TimeFormat;
-  servings: number;
-
-  description: string;
-  tags: string[];
-  rating: number;
-  ingredients: Ingredient[];
-  steps: Step[];
-};
+import { TimeFormatRecipe } from "../enums/timeFormatRecipe.enum";
+import { Recipe } from "../models/Recipes";
 
 //Dame un json de Recipe unos 20
 export const recipes: Recipe[] = [
@@ -40,10 +10,11 @@ export const recipes: Recipe[] = [
     name: "Pasta",
     description: "Delicious pasta recipe",
     time: 30,
-    time_format: TimeFormat.Minutes,
+    time_format: TimeFormatRecipe.MINUTE,
     servings: 4,
     tags: ["pasta", "italian"],
     rating: 4.5,
+    category: ["Main Course"],
     ingredients: [
       { id: "1", amount: "200", unit: 1, ingredient_name: "Spaghetti" },
       { id: "2", amount: "100", unit: 2, ingredient_name: "Tomato Sauce" },
@@ -60,9 +31,10 @@ export const recipes: Recipe[] = [
     name: "Chicken",
     description: "Tasty chicken recipe",
     time: 45,
-    time_format: TimeFormat.Minutes,
+    time_format: TimeFormatRecipe.MINUTE,
     servings: 4,
-    tags: ["chicken", "grill"],
+    category: ["Main Course"],
+    tags: ["Dessert", "grill"],
     rating: 4.7,
     ingredients: [
       { id: "3", amount: "500", unit: 3, ingredient_name: "Chicken Breast" },
@@ -80,9 +52,10 @@ export const recipes: Recipe[] = [
     name: "Pasta",
     description: "Delicious pasta recipe",
     time: 30,
-    time_format: TimeFormat.Minutes,
+    time_format: TimeFormatRecipe.MINUTE,
     servings: 4,
     tags: ["pasta", "italian"],
+    category: ["Main Course"],
     rating: 4.5,
     ingredients: [
       { id: "5", amount: "200", unit: 1, ingredient_name: "Spaghetti" },
@@ -100,9 +73,10 @@ export const recipes: Recipe[] = [
     name: "Chicken",
     description: "Tasty chicken recipe",
     time: 45,
-    time_format: TimeFormat.Minutes,
+    time_format: TimeFormatRecipe.MINUTE,
     servings: 4,
-    tags: ["chicken", "grill"],
+    tags: ["chicken", "Drink"],
+    category: ["Main Course", "Drink"],
     rating: 4.7,
     ingredients: [
       { id: "7", amount: "500", unit: 3, ingredient_name: "Chicken Breast" },

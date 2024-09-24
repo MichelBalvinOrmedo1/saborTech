@@ -2,8 +2,8 @@ import { createBrowserRouter } from "react-router-dom";
 
 import ProtectedRoute from "./ProtectedRoute";
 import { Home } from "../app/home/Home";
-import { Login } from "../app/auth/Login";
-import { Signup } from "../app/auth/Signup";
+import { Login } from "../page/auth/Login";
+import { Signup } from "../page/auth/Signup";
 import { App } from "../App";
 import { Search } from "../page/Search/Search";
 

@@ -1,22 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-enum TimeFormat {
-  Minutes = "minutes",
-  Hours = "hours",
-  Days = "days",
-}
-interface Recipe {
-  id: string;
-  image: string;
-  time: number;
-  time_format: TimeFormat;
-  servings: number;
-  name: string;
-  description: string;
-  rating: number;
-}
+import { RecipeListItem } from "../models/Recipes";
 
 interface RecipesState {
-  data: Recipe[];
+  data: RecipeListItem[];
 }
 
 const initialState: RecipesState = {
@@ -27,7 +13,7 @@ const recipesSlice = createSlice({
   name: "recipes",
   initialState,
   reducers: {
-    setRecipes: (state, action: PayloadAction<Recipe[]>) => {
+    setRecipes: (state, action: PayloadAction<RecipeListItem[]>) => {
       state.data = action.payload;
     },
   },
