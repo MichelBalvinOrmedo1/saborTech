@@ -8,22 +8,22 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
-
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.sabortech.sabortech.jwt.JwtAuthenticationFilter;
 
-import lombok.RequiredArgsConstructor;
-
 @Configuration
 @EnableWebSecurity
-@RequiredArgsConstructor
 public class SecurityConfig {
 
         private final JwtAuthenticationFilter jwtAuthenticationFilter;
         private final AuthenticationProvider authProvider;
-        private final CustomAccessDeniedHandler accessDeniedHandler;
-        private final CustomAuthenticationEntryPoint authenticationEntryPoint;
+
+        public SecurityConfig(JwtAuthenticationFilter jwtAuthenticationFilter,
+                        AuthenticationProvider authProvider) {
+                this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+                this.authProvider = authProvider;
+        }
 
         @Bean
         public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -37,9 +37,6 @@ public class SecurityConfig {
                                                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                                 .authenticationProvider(authProvider)
                                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                                .exceptionHandling(exceptionHandling -> exceptionHandling
-                                                .accessDeniedHandler(accessDeniedHandler)
-                                                .authenticationEntryPoint(authenticationEntryPoint))
                                 .build();
         }
 }

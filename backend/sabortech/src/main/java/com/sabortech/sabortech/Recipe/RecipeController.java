@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.sabortech.sabortech.User.UserService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/recipe")
 public class RecipeController {
@@ -37,7 +39,7 @@ public class RecipeController {
     }
 
     @PostMapping
-    public ResponseEntity<RecipeDTO> createRecipe(@RequestBody RecipeRequest request) {
+    public ResponseEntity<RecipeDTO> createRecipe(@Valid @RequestBody RecipeRequest request) {
         UUID userId = userService.getAuthenticatedUserId();
 
         RecipeDTO newRecipe = recipeService.createRecipe(request, userId);

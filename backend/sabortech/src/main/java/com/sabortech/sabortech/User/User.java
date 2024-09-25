@@ -8,6 +8,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.sabortech.sabortech.Rating.RatingModel;
 import com.sabortech.sabortech.Recipe.RecipeModel;
 
 import jakarta.persistence.CascadeType;
@@ -49,6 +50,9 @@ public class User implements UserDetails {
     // Relación uno a muchos: un usuario puede tener muchas recetas
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<RecipeModel> recipes;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<RatingModel> ratings;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

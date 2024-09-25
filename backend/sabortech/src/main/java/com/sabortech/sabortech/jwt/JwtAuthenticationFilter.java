@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.sabortech.sabortech.exception.TokenException;
+
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,7 +23,6 @@ import lombok.RequiredArgsConstructor;
 @Component
 @RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
 
@@ -37,7 +38,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             return;
         }
 
-        username = jwtService.getUsernameFromToken(token);
+        try {
+            username = jwtService.getUsernameFromToken(token);
+        } catch (TokenException e) {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.getWriter().write("{ \"error\": \"" + e.getMessage() + "\" }");
+            return;
+        }
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
@@ -52,7 +59,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
                 SecurityContextHolder.getContext().setAuthentication(authToken);
             }
-
         }
 
         filterChain.doFilter(request, response);
@@ -66,5 +72,4 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
         return null;
     }
-
 }
