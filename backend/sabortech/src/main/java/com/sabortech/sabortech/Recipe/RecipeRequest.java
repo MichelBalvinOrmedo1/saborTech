@@ -3,6 +3,7 @@ package com.sabortech.sabortech.Recipe;
 import java.util.List;
 
 import com.sabortech.sabortech.Ingredient.IngredientRequest;
+import com.sabortech.sabortech.Steps.StepRequest;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -42,5 +43,9 @@ public class RecipeRequest {
     @NotEmpty(message = "Ingredients cannot be empty")
     @Valid
     List<IngredientRequest> ingredients;
+
+    @NotEmpty(message = "steps cannot be empty")
+    @Valid
+    List<StepRequest> steps;
 
 }

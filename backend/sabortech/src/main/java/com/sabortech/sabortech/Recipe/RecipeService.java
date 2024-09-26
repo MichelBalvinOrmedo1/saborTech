@@ -13,6 +13,8 @@ import com.sabortech.sabortech.Ingredient.IngredientDTO;
 import com.sabortech.sabortech.Ingredient.IngredientService;
 import com.sabortech.sabortech.Rating.RatingDTO;
 import com.sabortech.sabortech.Rating.RatingService;
+import com.sabortech.sabortech.Steps.StepDTO;
+import com.sabortech.sabortech.Steps.StepService;
 
 import jakarta.validation.Valid;
 
@@ -28,6 +30,9 @@ public class RecipeService {
     @Autowired
     private IngredientService ingredientService;
 
+    @Autowired
+    private StepService stepService;
+
     public Optional<RecipeModel> getRecipeById(UUID id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -38,7 +43,7 @@ public class RecipeService {
         List<RecipeDTO> recipeDTOList = dataList.stream().map(recipe -> {
             RatingDTO ratting = ratingService.getRating(recipe.getId());
             List<IngredientDTO> ingredients = ingredientService.getIngredientsByRecipeId(recipe.getId());
-
+            List<StepDTO> steps = stepService.getStepsByRecipeId(recipe.getId());
             return new RecipeDTO(
                     recipe.getId(), // Convertir String a UUID
                     recipe.getImage(),
@@ -50,7 +55,8 @@ public class RecipeService {
                     recipe.getTime(),
                     recipe.getTime_format(), // Asegúrate de tener el método getTimeFormat
                     ratting,
-                    ingredients // Asegúrate de que rating esté correctamente definido y accesible
+                    ingredients, // Asegúrate de que rating esté correctamente definido y accesible
+                    steps // Asegúrate de que rating esté correctamente definido y accesible
             );
         }).collect(Collectors.toList());
 
@@ -78,6 +84,8 @@ public class RecipeService {
 
         List<IngredientDTO> ingredients = ingredientService.createIngredient(request.ingredients, recip.getId());
 
+        List<StepDTO> steps = stepService.createStep(request.steps, recip.getId());
+
         return new RecipeDTO(
                 recip.getId(),
                 recip.getImage(),
@@ -89,7 +97,8 @@ public class RecipeService {
                 recip.getTime(),
                 recip.getTime_format(),
                 rating,
-                ingredients);
+                ingredients,
+                steps);
 
     }
 }

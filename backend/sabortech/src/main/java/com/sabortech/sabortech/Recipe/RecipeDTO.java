@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import com.sabortech.sabortech.Ingredient.IngredientDTO;
 import com.sabortech.sabortech.Rating.RatingDTO;
+import com.sabortech.sabortech.Steps.StepDTO;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,4 +26,5 @@ public class RecipeDTO {
     private String time_format;
     private RatingDTO rating;
     private List<IngredientDTO> ingredients;
+    private List<StepDTO> steps;
 }
