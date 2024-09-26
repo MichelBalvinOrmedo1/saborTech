@@ -1,6 +1,6 @@
 package com.sabortech.sabortech.Recipe;
 
-import java.util.Arrays;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -9,7 +9,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.sabortech.sabortech.User.UserRepository;
+import com.sabortech.sabortech.Rating.RatingDTO;
+import com.sabortech.sabortech.Rating.RatingService;
 
 import jakarta.validation.Valid;
 
@@ -20,7 +21,7 @@ public class RecipeService {
     private RecipeRepository recipeRepository;
 
     @Autowired
-    private UserRepository userRepository;
+    private RatingService ratingService;
 
     public Optional<RecipeModel> getRecipeById(UUID id) {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -28,17 +29,23 @@ public class RecipeService {
 
     public List<RecipeDTO> getAllRecipe() {
         List<RecipeModel> dataList = recipeRepository.findAll();
-        List<RecipeDTO> recipeDTOList = dataList.stream().map(recipe -> new RecipeDTO(
-                recipe.getId(),
-                recipe.getImage(), // Asegúrate de que RecipeModel tenga este campo
-                recipe.getName(), // Asegúrate de que RecipeModel tenga este campo
-                recipe.getServings(), // Asegúrate de que RecipeModel tenga este campo
-                recipe.getTitle(),
-                recipe.getDescription(),
-                Arrays.asList(recipe.getTags()), // Convert String[] to List<String>
-                recipe.getTime(), // Asegúrate de que RecipeModel tenga este campo
-                recipe.getTime_format() // Asegúrate de que RecipeModel tenga este campo
-        )).collect(Collectors.toList());
+
+        List<RecipeDTO> recipeDTOList = dataList.stream().map(recipe -> {
+            RatingDTO ratting = ratingService.getRating(recipe.getId());
+
+            return new RecipeDTO(
+                    recipe.getId(), // Convertir String a UUID
+                    recipe.getImage(),
+                    recipe.getName(),
+                    recipe.getServings(),
+                    recipe.getTitle(),
+                    recipe.getDescription(),
+                    recipe.getTags(),
+                    recipe.getTime(),
+                    recipe.getTime_format(), // Asegúrate de tener el método getTimeFormat
+                    ratting // Asegúrate de que rating esté correctamente definido y accesible
+            );
+        }).collect(Collectors.toList());
 
         return recipeDTOList;
     }
@@ -48,6 +55,7 @@ public class RecipeService {
         RecipeModel recip = RecipeModel.builder()
                 .image(request.getImage())
                 .name(request.getName())
+                .title(request.getTitle())
                 .servings(request.getServings())
                 .time(request.getTime())
                 .time_format(request.getTime_format())
@@ -57,6 +65,10 @@ public class RecipeService {
                 .build();
 
         recip = recipeRepository.save(recip);
+
+        BigDecimal ratingValue = new BigDecimal(0);
+        RatingDTO rating = ratingService.createRating(recip.getId(), ratingValue, userId);
+
         return new RecipeDTO(
                 recip.getId(),
                 recip.getImage(),
@@ -64,8 +76,9 @@ public class RecipeService {
                 recip.getServings(),
                 recip.getTitle(),
                 recip.getDescription(),
-                Arrays.asList(recip.getTags()),
+                recip.getTags(), // Convert List<String> to String[]
                 recip.getTime(),
-                recip.getTime_format());
+                recip.getTime_format(),
+                rating);
     }
 }
