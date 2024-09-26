@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.sabortech.sabortech.Ingredient.IngredientDTO;
+import com.sabortech.sabortech.Ingredient.IngredientService;
 import com.sabortech.sabortech.Rating.RatingDTO;
 import com.sabortech.sabortech.Rating.RatingService;
 
@@ -23,6 +25,9 @@ public class RecipeService {
     @Autowired
     private RatingService ratingService;
 
+    @Autowired
+    private IngredientService ingredientService;
+
     public Optional<RecipeModel> getRecipeById(UUID id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -32,6 +37,7 @@ public class RecipeService {
 
         List<RecipeDTO> recipeDTOList = dataList.stream().map(recipe -> {
             RatingDTO ratting = ratingService.getRating(recipe.getId());
+            List<IngredientDTO> ingredients = ingredientService.getIngredientsByRecipeId(recipe.getId());
 
             return new RecipeDTO(
                     recipe.getId(), // Convertir String a UUID
@@ -43,7 +49,8 @@ public class RecipeService {
                     recipe.getTags(),
                     recipe.getTime(),
                     recipe.getTime_format(), // Asegúrate de tener el método getTimeFormat
-                    ratting // Asegúrate de que rating esté correctamente definido y accesible
+                    ratting,
+                    ingredients // Asegúrate de que rating esté correctamente definido y accesible
             );
         }).collect(Collectors.toList());
 
@@ -69,6 +76,8 @@ public class RecipeService {
         BigDecimal ratingValue = new BigDecimal(0);
         RatingDTO rating = ratingService.createRating(recip.getId(), ratingValue, userId);
 
+        List<IngredientDTO> ingredients = ingredientService.createIngredient(request.ingredients, recip.getId());
+
         return new RecipeDTO(
                 recip.getId(),
                 recip.getImage(),
@@ -76,9 +85,11 @@ public class RecipeService {
                 recip.getServings(),
                 recip.getTitle(),
                 recip.getDescription(),
-                recip.getTags(), // Convert List<String> to String[]
+                recip.getTags(),
                 recip.getTime(),
                 recip.getTime_format(),
-                rating);
+                rating,
+                ingredients);
+
     }
 }

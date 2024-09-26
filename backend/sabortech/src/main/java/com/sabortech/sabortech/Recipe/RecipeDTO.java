@@ -1,7 +1,9 @@
 package com.sabortech.sabortech.Recipe;
 
+import java.util.List;
 import java.util.UUID;
 
+import com.sabortech.sabortech.Ingredient.IngredientDTO;
 import com.sabortech.sabortech.Rating.RatingDTO;
 
 import lombok.AllArgsConstructor;
@@ -22,5 +24,5 @@ public class RecipeDTO {
     private int time;
     private String time_format;
     private RatingDTO rating;
-
+    private List<IngredientDTO> ingredients;
 }

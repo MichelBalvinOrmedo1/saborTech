@@ -1,15 +1,20 @@
 package com.sabortech.sabortech.Recipe;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import com.sabortech.sabortech.Ingredient.IngredientRequest;
+
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@AllArgsConstructor
 @Builder
 @NoArgsConstructor
 public class RecipeRequest {
@@ -34,15 +39,8 @@ public class RecipeRequest {
     @NotNull
     int servings;
 
-    public RecipeRequest(String title, String description, List<String> tags, int time, String time_format,
-            String image, String name, int servings) {
-        this.title = title;
-        this.description = description;
-        this.tags = (tags != null) ? tags : new ArrayList<>();
-        this.time = time;
-        this.time_format = time_format;
-        this.image = image;
-        this.name = name;
-        this.servings = servings;
-    }
+    @NotEmpty(message = "Ingredients cannot be empty")
+    @Valid
+    List<IngredientRequest> ingredients;
+
 }

@@ -1,6 +1,5 @@
-package com.sabortech.sabortech.Rating;
+package com.sabortech.sabortech.Ingredient;
 
-import java.math.BigDecimal;
 import java.util.UUID;
 
 import lombok.AllArgsConstructor;
@@ -10,9 +9,11 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class RatingDTO {
+public class IngredientDTO {
 
     private UUID id;
+    private String name;
+    private int amount;
+    private String unit;
 
-    private BigDecimal rating;
 }

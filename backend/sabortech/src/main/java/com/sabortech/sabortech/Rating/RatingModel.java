@@ -40,6 +40,7 @@ public class RatingModel {
     private User user;
     @Column(name = "user_id", nullable = false)
     private UUID userId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "recipe_id", nullable = false, insertable = false, updatable = false)
     private RecipeModel recipe;
