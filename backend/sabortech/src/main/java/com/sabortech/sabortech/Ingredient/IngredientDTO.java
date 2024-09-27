@@ -13,7 +13,7 @@ public class IngredientDTO {
 
     private UUID id;
     private String name;
-    private int amount;
+    private String amount;
     private String unit;
 
 }

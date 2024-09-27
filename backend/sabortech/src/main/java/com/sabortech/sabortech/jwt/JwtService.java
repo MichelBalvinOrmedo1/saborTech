@@ -33,11 +33,11 @@ public class JwtService {
         try {
             return getClaim(token, Claims::getSubject);
         } catch (ExpiredJwtException e) {
-            throw new TokenException("Token expirado", e);
+            throw new TokenException("Token expirado");
         } catch (SignatureException e) {
-            throw new TokenException("Firma del token no coincide", e);
+            throw new TokenException("Firma del token no coincide");
         } catch (Exception e) {
-            throw new TokenException("Token inválido", e);
+            throw new TokenException("Token inválido");
         }
     }
 

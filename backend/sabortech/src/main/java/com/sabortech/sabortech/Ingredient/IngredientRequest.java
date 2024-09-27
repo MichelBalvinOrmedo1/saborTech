@@ -1,7 +1,7 @@
 package com.sabortech.sabortech.Ingredient;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -13,10 +13,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class IngredientRequest {
     @NotBlank(message = "Name is mandatory")
+    @Size(min = 2, message = "Description must be at least 2 characters long")
     private String name;
 
-    @NotNull(message = "Amount is mandatory")
-    private int amount;
+    @NotBlank(message = "Amount is mandatory")
+    @Size(min = 2, message = "Description must be at least 2 characters long")
+    private String amount;
 
     @NotBlank(message = "Unit is mandatory")
     private String unit;

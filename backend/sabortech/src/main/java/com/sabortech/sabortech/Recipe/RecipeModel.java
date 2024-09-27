@@ -62,15 +62,14 @@ public class RecipeModel {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false, insertable = false, updatable = false)
     private User user;
+    @Column(name = "user_id", nullable = false)
+    private UUID userId;
 
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<IngredientModel> ingredients;
 
     @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<StepModel> steps;
-
-    @Column(name = "user_id", nullable = false)
-    private UUID userId;
 
     @OneToMany(mappedBy = "id.recipeId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<CategoryRecipeModel> categoryRecipes;

@@ -13,6 +13,7 @@ import com.sabortech.sabortech.CategoryRecipe.CategoryRecipeDTO;
 import com.sabortech.sabortech.CategoryRecipe.CategoryRecipeService;
 import com.sabortech.sabortech.Ingredient.IngredientDTO;
 import com.sabortech.sabortech.Ingredient.IngredientService;
+import com.sabortech.sabortech.Profile.ProfileService;
 import com.sabortech.sabortech.Rating.RatingDTO;
 import com.sabortech.sabortech.Rating.RatingService;
 import com.sabortech.sabortech.Steps.StepDTO;
@@ -38,6 +39,9 @@ public class RecipeService {
     @Autowired
     private CategoryRecipeService categoryRecipeService;
 
+    @Autowired
+    private ProfileService profileService;
+
     public Optional<RecipeModel> getRecipeById(UUID id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
@@ -51,7 +55,7 @@ public class RecipeService {
             List<StepDTO> steps = stepService.getStepsByRecipeId(recipe.getId());
             List<CategoryRecipeDTO> categories = categoryRecipeService.getCategoryRecipeByRecipeId(recipe.getId());
             return new RecipeDTO(
-                    recipe.getId(), // Convertir String a UUID
+                    recipe.getId(),
                     recipe.getImage(),
                     recipe.getName(),
                     recipe.getServings(),
@@ -59,12 +63,11 @@ public class RecipeService {
                     recipe.getDescription(),
                     recipe.getTags(),
                     recipe.getTime(),
-                    recipe.getTime_format(), // Asegúrate de tener el método getTimeFormat
+                    recipe.getTime_format(),
                     ratting,
-                    ingredients, // Asegúrate de que rating esté correctamente definido y accesible
+                    ingredients,
                     steps,
-                    categories // Asegúrate de que rating esté correctamente definido y accesible
-            );
+                    categories);
         }).collect(Collectors.toList());
 
         return recipeDTOList;
@@ -95,6 +98,8 @@ public class RecipeService {
 
         List<CategoryRecipeDTO> categories = categoryRecipeService.creaCategoryRecipeDTO(request.categories,
                 recip.getId());
+
+        profileService.updateRecipesCount(userId);
 
         return new RecipeDTO(
                 recip.getId(),

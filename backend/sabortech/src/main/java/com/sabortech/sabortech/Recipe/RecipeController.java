@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sabortech.sabortech.ApiResponse.ApiResponse;
 import com.sabortech.sabortech.User.UserService;
 
 import jakarta.validation.Valid;
@@ -39,11 +40,11 @@ public class RecipeController {
     }
 
     @PostMapping
-    public ResponseEntity<RecipeDTO> createRecipe(@Valid @RequestBody RecipeRequest request) {
+    public ApiResponse<RecipeDTO> createRecipe(@Valid @RequestBody RecipeRequest request) {
         UUID userId = userService.getAuthenticatedUserId();
 
         RecipeDTO newRecipe = recipeService.createRecipe(request, userId);
-        return ResponseEntity.ok(newRecipe);
+        return new ApiResponse<>("success", "Recipe created", newRecipe);
     }
 
 }

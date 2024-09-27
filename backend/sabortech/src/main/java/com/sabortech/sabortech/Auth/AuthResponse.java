@@ -1,5 +1,7 @@
 package com.sabortech.sabortech.Auth;
 
+import com.sabortech.sabortech.Profile.ProfileDTO;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,5 +13,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class AuthResponse {
     String token;
+
     String userName;
+
+    ProfileDTO profile;
+
 }

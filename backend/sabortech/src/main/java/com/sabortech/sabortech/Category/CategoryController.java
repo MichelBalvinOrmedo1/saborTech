@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sabortech.sabortech.ApiResponse.ApiResponse;
+
 import jakarta.validation.Valid;
 
 @RestController
@@ -19,13 +21,14 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @GetMapping
-    public List<CategoryDTO> getAllCategory() {
-        return categoryService.getAllCategory();
+    public ApiResponse<List<CategoryDTO>> getAllCategory() {
+        List<CategoryDTO> categories = categoryService.getAllCategory();
+        return new ApiResponse<>("success", "Categories retrieved", categories);
     }
 
     @PostMapping
-    public CategoryDTO createCategory(@Valid @RequestBody CategoryRequest request) {
-        return categoryService.createCategory(request);
+    public ApiResponse<CategoryDTO> createCategory(@Valid @RequestBody CategoryRequest request) {
+        return new ApiResponse<>("success", "Category created", categoryService.createCategory(request));
     }
 
 }

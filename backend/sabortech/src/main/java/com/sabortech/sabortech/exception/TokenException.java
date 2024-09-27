@@ -5,7 +5,4 @@ public class TokenException extends RuntimeException {
         super(message);
     }
 
-    public TokenException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

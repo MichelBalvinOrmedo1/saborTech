@@ -38,7 +38,7 @@ public class IngredientModel {
     private String name;
 
     @Column(nullable = false)
-    private int amount;
+    private String amount;
 
     @Column(nullable = false)
     private String unit;
