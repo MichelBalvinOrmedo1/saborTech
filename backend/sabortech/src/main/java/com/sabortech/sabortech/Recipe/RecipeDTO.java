@@ -3,6 +3,7 @@ package com.sabortech.sabortech.Recipe;
 import java.util.List;
 import java.util.UUID;
 
+import com.sabortech.sabortech.CategoryRecipe.CategoryRecipeDTO;
 import com.sabortech.sabortech.Ingredient.IngredientDTO;
 import com.sabortech.sabortech.Rating.RatingDTO;
 import com.sabortech.sabortech.Steps.StepDTO;
@@ -27,4 +28,5 @@ public class RecipeDTO {
     private RatingDTO rating;
     private List<IngredientDTO> ingredients;
     private List<StepDTO> steps;
+    private List<CategoryRecipeDTO> categories;
 }

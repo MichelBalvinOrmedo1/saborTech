@@ -47,7 +47,6 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     Role role;
 
-    // Relación uno a muchos: un usuario puede tener muchas recetas
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<RecipeModel> recipes;
 

@@ -2,6 +2,7 @@ package com.sabortech.sabortech.Recipe;
 
 import java.util.List;
 
+import com.sabortech.sabortech.CategoryRecipe.CategoryRecipeRequest;
 import com.sabortech.sabortech.Ingredient.IngredientRequest;
 import com.sabortech.sabortech.Steps.StepRequest;
 
@@ -47,5 +48,9 @@ public class RecipeRequest {
     @NotEmpty(message = "steps cannot be empty")
     @Valid
     List<StepRequest> steps;
+
+    @NotEmpty(message = "categories cannot be empty")
+    @Valid
+    List<CategoryRecipeRequest> categories;
 
 }

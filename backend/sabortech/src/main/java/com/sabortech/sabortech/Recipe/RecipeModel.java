@@ -7,9 +7,13 @@ import java.util.UUID;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import com.sabortech.sabortech.CategoryRecipe.CategoryRecipeModel;
+import com.sabortech.sabortech.Ingredient.IngredientModel;
 import com.sabortech.sabortech.Rating.RatingModel;
+import com.sabortech.sabortech.Steps.StepModel;
 import com.sabortech.sabortech.User.User;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -59,8 +63,17 @@ public class RecipeModel {
     @JoinColumn(name = "user_id", nullable = false, insertable = false, updatable = false)
     private User user;
 
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<IngredientModel> ingredients;
+
+    @OneToMany(mappedBy = "recipe", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<StepModel> steps;
+
     @Column(name = "user_id", nullable = false)
     private UUID userId;
+
+    @OneToMany(mappedBy = "id.recipeId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<CategoryRecipeModel> categoryRecipes;
 
     @CreationTimestamp
     @Column(name = "created_at", updatable = false)
