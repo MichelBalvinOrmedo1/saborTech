@@ -73,8 +73,6 @@ export const Signup = () => {
             </button>
           </div>
         </form>
-
-        <div>{JSON.stringify(watch(), null, 2)}</div>
       </div>
     </>
   );
