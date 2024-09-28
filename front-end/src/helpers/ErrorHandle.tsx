@@ -4,6 +4,11 @@ import { toast } from "react-toastify";
 export const handleError = (error: any) => {
   if (axios.isAxiosError(error)) {
     const err = error.response;
+    console.log(err);
+    if (err?.status === 401) {
+      toast.warning(err?.data.message);
+      window.history.pushState({}, "LoginPage", "/login");
+    }
     if (Array.isArray(err?.data.erros)) {
       for (const val of err.data.errors) {
         toast.warning(val.description);

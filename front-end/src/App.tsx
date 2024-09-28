@@ -15,9 +15,11 @@ export const App = () => {
       <Provider store={store}>
         <QueryProvider>
           <UserProvider>
-            <Navbar />
-            <Outlet />
-            <ToastContainer />
+            <div className="relative flex size-full min-h-screen flex-col bg-[#ffffff] dark group/design-root overflow-x-hidden">
+              <Navbar />
+              <Outlet />
+              <ToastContainer />
+            </div>
           </UserProvider>
         </QueryProvider>
       </Provider>

@@ -1,7 +1,7 @@
 import axios from "axios";
 import publicConfig from "../config/public.config";
 import { handleError } from "../helpers/ErrorHandle";
-import { UserProfileToken } from "../models/User";
+import { RegisterUser, UserProfileToken } from "../models/User";
 
 const api = publicConfig.api.v1;
 const axiosInstance = axios.create({
@@ -27,14 +27,14 @@ export const loginApi = async (username: string, password: string) => {
 
 export const registerApi = async (
   username: string,
-  email: string,
-  password: string
+  password: string,
+  profile: RegisterUser
 ) => {
   try {
     const data = await axios.post<UserProfileToken>(`${api}/auth/register`, {
       username: username,
-      email: email,
       password: password,
+      profile: profile,
     });
 
     return data;

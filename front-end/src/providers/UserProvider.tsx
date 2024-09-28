@@ -2,7 +2,7 @@ import { useEffect, useState, ReactNode } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { UserProfile } from "../models/User";
+import { RegisterUser, UserProfile } from "../models/User";
 import { loginApi, registerApi } from "../Service/AuthService";
 import UserContext from "../context/UserContext";
 
@@ -27,22 +27,26 @@ export const UserProvider = ({ children }: Props) => {
   }, []);
 
   const registerUser = async (
-    email: string,
     username: string,
-    password: string
+    password: string,
+    profile: RegisterUser
   ) => {
-    await registerApi(email, username, password)
+    await registerApi(username, password, profile)
       .then((res) => {
         if (res) {
           localStorage.setItem("token", res?.data.token);
           const userObj = {
             userName: res?.data.userName,
-            email: res?.data.email,
+            profile: {
+              fullName:
+                res?.data.profile.firstName + " " + res?.data.profile.lastName,
+              profileImage: res?.data.profile.profileImage,
+            },
           };
 
           localStorage.setItem("user", JSON.stringify(userObj));
           setToken(res?.data.token);
-          setUser(userObj!);
+          setUser(userObj);
           toast.success("User registered successfully");
           navigate("/");
         }
@@ -59,7 +63,10 @@ export const UserProvider = ({ children }: Props) => {
           localStorage.setItem("token", res?.token);
           const userObj = {
             userName: res?.userName,
-            email: res?.email,
+            profile: {
+              fullName: res?.profile.firstName + " " + res?.profile.lastName,
+              profileImage: res?.profile.profileImage,
+            },
           };
 
           localStorage.setItem("user", JSON.stringify(userObj));

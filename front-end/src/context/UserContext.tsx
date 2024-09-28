@@ -1,10 +1,14 @@
 import { createContext } from "react";
-import { UserProfile } from "../models/User";
+import { RegisterUser, UserProfile } from "../models/User";
 
 export type UserContextType = {
   user: UserProfile | null;
   token: string | null;
-  registerUser: (email: string, username: string, password: string) => void;
+  registerUser: (
+    username: string,
+    password: string,
+    profile: RegisterUser
+  ) => void;
   loginUser: (username: string, password: string) => void;
   logout: () => void;
   isLoggedIn: () => boolean;

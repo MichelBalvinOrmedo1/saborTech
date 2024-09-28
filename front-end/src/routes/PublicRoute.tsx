@@ -4,14 +4,14 @@ import { useAuth } from "../hooks/useAuth";
 
 type Props = { children: React.ReactNode };
 
-const ProtectedRoute = ({ children }: Props) => {
+const PublicRoute = ({ children }: Props) => {
   const location = useLocation();
   const { isLoggedIn } = useAuth();
-  return isLoggedIn() ? (
+  return !isLoggedIn() ? (
     <>{children}</>
   ) : (
-    <Navigate to="/login" state={{ from: location }} replace />
+    <Navigate to="/" state={{ from: location }} replace />
   );
 };
 
-export default ProtectedRoute;
+export default PublicRoute;
