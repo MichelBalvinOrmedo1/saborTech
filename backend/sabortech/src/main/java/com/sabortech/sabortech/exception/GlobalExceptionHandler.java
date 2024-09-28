@@ -60,12 +60,12 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(UserNotFoundException.class)
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ResponseEntity<Map<String, String>> handleUserNotFoundException(UserNotFoundException ex) {
         Map<String, String> errorResponse = new HashMap<>();
         errorResponse.put("status", "error");
         errorResponse.put("message", ex.getMessage());
-        return new ResponseEntity<>(errorResponse, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(errorResponse, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(CategoryRecipeNotFound.class)
