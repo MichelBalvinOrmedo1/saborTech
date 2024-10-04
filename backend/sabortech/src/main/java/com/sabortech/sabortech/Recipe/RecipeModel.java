@@ -42,7 +42,7 @@ public class RecipeModel {
     private UUID id;
     @NotNull
     @Column(nullable = false)
-    private String image;
+    private UUID file_id;
     private String name;
     private String title;
     private int servings;

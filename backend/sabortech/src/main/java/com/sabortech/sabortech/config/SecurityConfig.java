@@ -30,6 +30,8 @@ public class SecurityConfig {
                 return http
                                 .csrf(csrf -> csrf.disable())
                                 .authorizeHttpRequests(authRequest -> authRequest
+                                                .requestMatchers("/image/**").permitAll() // Permitir acceso a archivos
+                                                                                          // estáticos
                                                 .requestMatchers("/auth/**").permitAll()
                                                 .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                                                 .anyRequest().authenticated())

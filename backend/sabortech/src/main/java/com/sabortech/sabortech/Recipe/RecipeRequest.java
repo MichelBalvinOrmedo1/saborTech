@@ -1,6 +1,7 @@
 package com.sabortech.sabortech.Recipe;
 
 import java.util.List;
+import java.util.UUID;
 
 import com.sabortech.sabortech.CategoryRecipe.CategoryRecipeRequest;
 import com.sabortech.sabortech.Ingredient.IngredientRequest;
@@ -34,7 +35,6 @@ public class RecipeRequest {
 
     @NotBlank(message = "Time format is mandatory")
     String time_format;
-    @NotNull
     String image;
     @NotNull
     String name;
@@ -52,5 +52,8 @@ public class RecipeRequest {
     @NotEmpty(message = "categories cannot be empty")
     @Valid
     List<CategoryRecipeRequest> categories;
+
+    @NotNull
+    UUID file_id;
 
 }

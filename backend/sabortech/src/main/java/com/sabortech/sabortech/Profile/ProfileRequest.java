@@ -1,10 +1,11 @@
 package com.sabortech.sabortech.Profile;
 
+import java.util.UUID;
+
 import org.springframework.validation.annotation.Validated;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,14 +31,12 @@ public class ProfileRequest {
     @Email(message = "Invalid email")
     private String email;
 
-    @NotNull(message = "Recipes count is required")
     private Integer recipesCount;
 
-    @NotNull(message = "Followers count is required")
     private Integer followersCount;
 
     private String biografy;
 
-    private String profileImage;
+    private UUID fileId;
 
 }

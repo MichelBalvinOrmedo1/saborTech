@@ -9,15 +9,17 @@ import com.sabortech.sabortech.Rating.RatingDTO;
 import com.sabortech.sabortech.Steps.StepDTO;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 public class RecipeDTO {
     private UUID id;
-    private String image;
+    private UUID file_id;
     private String name;
     private int servings;
     private String title;
@@ -29,4 +31,5 @@ public class RecipeDTO {
     private List<IngredientDTO> ingredients;
     private List<StepDTO> steps;
     private List<CategoryRecipeDTO> categories;
+    private String image;
 }

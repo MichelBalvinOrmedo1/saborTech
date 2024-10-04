@@ -18,6 +18,7 @@ public class ProfileDTO {
     private Integer recipesCount;
     private Integer followersCount;
     private String biografy;
+    private UUID fileId;
     private String profileImage;
 
 }

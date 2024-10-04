@@ -11,7 +11,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
@@ -45,8 +44,9 @@ public class ProfileModel {
 
     @Column(nullable = false)
     private Integer followersCount;
+
     @Column(nullable = true)
-    private String profileImage;
+    private UUID fileId;
 
     @Column(nullable = true)
     private String biografy;
